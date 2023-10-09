@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "751534129514",
+    "firebase_url": "https://flutterdragdrop-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "flutterdragdrop",
+    "storage_bucket": "flutterdragdrop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751534129514:android:a00233ffed4edb285fe513",
+        "android_client_info": {
+          "package_name": "com.example.flutter_drag_drop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpzzpvNb6GTQxaBie-xvkKi-Qc2fIPwt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
