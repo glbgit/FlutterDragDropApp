@@ -75,8 +75,12 @@ class AuthService {
       return 'Unable to connect to the server.';
     } else if (exc.code == 'invalid-email') {
       return 'The email format is not valid.';
+    } else if (exc.code == 'invalid-login-credentials') {
+      return 'Invalid login credentials.';
     } else if (exc.code == 'email-already-in-use') {
       return 'The account already exists for that email.';
+    } else if (exc.code == 'user-disabled') {
+      return 'User is not available.';
     } else if (exc.code == 'user-not-found') {
       return 'No user found for the given email.';
     } else if (exc.code == 'wrong-password') {
