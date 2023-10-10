@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_drag_drop/user.dart';
+import 'package:flutter_drag_drop/cloud_service.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'auth_page.dart';
@@ -30,5 +30,5 @@ void initApp() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  MyUser.getUsers();
+  CloudService.getAllRegistered();
 }

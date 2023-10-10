@@ -88,7 +88,7 @@ class _AuthPageState extends State<AuthPage> {
 
   void _showFeedback(String? message) {
     var snackBar = SnackBar(
-      content: Text(message??'Operation completed successfully!'),
+      content: Text(message??'Operation successfully completed!'),
       duration: const Duration(seconds: 2),
       backgroundColor: message != null
           ? Colors.black
@@ -154,7 +154,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ],
                 ),
-                Text('Users: ${userList.length}'),
+                Text('Registered users: ${userList.length}'),
               ],
             ),
           ),
@@ -231,7 +231,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ],
                 ),
-                Text('Users: ${userList.length}'),
+                Text('Registered users: ${userList.length}'),
               ],
             ),
           ),

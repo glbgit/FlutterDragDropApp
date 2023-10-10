@@ -1,4 +1,5 @@
 // User class
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_drag_drop/user_page.dart';
 
 class MyUser {
@@ -68,10 +69,6 @@ class MyUser {
     }
     return false;
   }
-
-  static void getUsers() {
-
-  }
 }
 
 List<MyUser> userList = [];
@@ -79,3 +76,4 @@ const int numShapes = 16;
 const int shapeWidth = 64;
 const int shapeHeight = 64;
 const int maxGrid = 100;
+final CollectionReference users = FirebaseFirestore.instance.collection('users');

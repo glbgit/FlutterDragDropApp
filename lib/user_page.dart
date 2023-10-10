@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/auth_service.dart';
+import 'package:flutter_drag_drop/cloud_service.dart';
 import 'user.dart';
 import 'dart:math';
 
@@ -55,9 +56,10 @@ class _UserPage extends State<UserPage> {
   void _addShape() {
     int coord = _getNextAvailable();
     int id = randRange(0, numShapes);
-    var item = ShapeItem(id: id, position: coord);
+    var item = ShapeItem(id: id.toString(), position: coord);
     setState(() {
       widget.user.shapeMap[coord] = item;
+      CloudService.update(widget.user);
     });
   }
 
@@ -71,8 +73,8 @@ class _UserPage extends State<UserPage> {
       widget.user.shapeMap[newPosition] = item;
       widget.user.shapeMap[item.position] = null;
       item.position = newPosition;
-      }
-    );
+      CloudService.update(widget.user);
+    });
   }
 
   // Draw the shape
@@ -187,7 +189,7 @@ class ShapeItem {
     required this.position,
   });
 
-  final int id;
+  final String id;
   int position;
 }
 

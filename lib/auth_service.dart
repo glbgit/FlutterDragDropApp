@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_drop/cloud_service.dart';
 import 'package:flutter_drag_drop/user.dart';
 import 'package:flutter_drag_drop/auth_parameters.dart';
 import 'package:flutter_drag_drop/user_page.dart';
@@ -15,13 +16,19 @@ class AuthService {
           email: param.email,
           password: param.password
       );
+
+      // Create user
       var usr = MyUser(
         userCredential.user?.uid ?? 'user${userList.length}',
         param.email,
         param.password,
         param.displayName,
       );
+
+      // Add user
+      CloudService.add(usr);
       userList.add(usr);
+
       return null;
     } on FirebaseAuthException catch (e) {
       return handleException(e);
