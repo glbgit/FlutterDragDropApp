@@ -43,37 +43,37 @@ class AuthService {
           email: param.email,
           password: param.password
       );
-      var usr = MyUser(
-        userCredential.user?.uid ?? '',
-        param.email,
-        param.password,
-        param.displayName,
-      );
-      if (userList.isEmpty) {
-        userList.add(usr);
-      } else if (!usr.belongsTo(userList)) {
-        userList.add(usr);
+      MyUser? usr;
+      try {
+        usr = userList.firstWhere(
+              (e) =>
+          e.uid == userCredential.user?.uid
+        );
+      } on StateError catch(e) {
+        // User might have been created outside
+        // the application, hence it is not accessible.
+        logout();
+        return '${e.message}: User is private';
+      }
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => UserPage(user: usr!)
+          )
+        );
+        return null;
       }
     } on FirebaseAuthException catch (e) {
       return handleException(e);
-    }
-    var usr = userList.firstWhere((e) => e.email == param.email);
-    // Navigate to user page
-    if (context.mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => UserPage(user: usr)
-        ),
-      );
-      return null;
     }
     return 'Unknown problem occurred.';
   }
 
   // Logout activity
-  static void logout(BuildContext context) {
-    // TODO: Define log out
+  static void logout() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signOut();
   }
 
   // Handle authentication result

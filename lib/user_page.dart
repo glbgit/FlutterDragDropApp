@@ -23,7 +23,7 @@ class _UserPage extends State<UserPage> {
 
   // Call logout
   void _logout() {
-    AuthService.logout(context);
+    AuthService.logout();
     Navigator.pop(context);
   }
 
