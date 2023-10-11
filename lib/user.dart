@@ -59,14 +59,15 @@ class MyUser {
       "Password: $password";
   }
 
-  // Check if the user is on the list
-  bool belongsTo(List<MyUser> list) {
-    for (var usr in list) {
-      if (usr.email == _email) {
-        return true;
+  // Return user, if on the list
+  static MyUser? getUserByEmail(String email) {
+    for (var usr in userList) {
+      if (usr.email == email) {
+        return usr;
       }
     }
-    return false;
+    // If no user is found, return null
+    return null;
   }
 }
 

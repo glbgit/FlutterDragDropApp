@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/auth_parameters.dart';
 import 'package:flutter_drag_drop/cloud_service.dart';
+import 'package:flutter_drag_drop/user_page.dart';
 import 'auth_service.dart';
 import 'user.dart';
 
@@ -98,7 +99,7 @@ class _AuthPageState extends State<AuthPage> {
         displayName: _displayName.text,
     );
     if (param.confirmPassword(_passwordConfirm.text)) {
-      String? issue = await AuthService.register(context, param);
+      String? issue = await AuthService.register(param);
       if (issue == null) {
         setState(() {
           _type = AuthType.login;
@@ -112,23 +113,40 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  void _onPressedLogin() async {
+  void _onPressedSignIn() async {
     AuthParameters param = AuthParameters(
       email: _email.text,
       password: _password.text,
       displayName: _displayName.text,
     );
-    String? issue = await AuthService.login(context, param);
+    String? issue = await AuthService.login(param);
     if (issue != null) {
       _showFeedback(issue);
     } else {
-      _clearFields();
+      var usr = MyUser.getUserByEmail(param.email);
+      if (usr != null) {
+        if (context.mounted) {
+          // Go to user page
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserPage(user: usr)
+              )
+          );
+        }
+        _clearFields();
+      } else {
+        // User might have been created outside
+        // the application, hence it is not accessible.
+        AuthService.logout();
+        _showFeedback('User is private.');
+      }
     }
   }
 
   void _showFeedback(String? message) {
     var snackBar = SnackBar(
-      content: Text(message??'Operation successfully completed!'),
+      content: Text(message ?? 'Operation successfully completed!'),
       duration: const Duration(seconds: 2),
       backgroundColor: message != null
           ? Colors.black
@@ -174,7 +192,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 // Button
                 ElevatedButton(
-                  onPressed: _onPressedLogin,
+                  onPressed: _onPressedSignIn,
                   child: const Text('Log in'),
                 ),
                 // Sign up if not registered

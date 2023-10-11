@@ -1,15 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/cloud_service.dart';
 import 'package:flutter_drag_drop/user.dart';
 import 'package:flutter_drag_drop/auth_parameters.dart';
-import 'package:flutter_drag_drop/user_page.dart';
 
 // Authentication service class
 class AuthService {
 
   // Registration activity
-  static Future<String?> register(BuildContext context, AuthParameters param) async {
+  static Future<String?> register(AuthParameters param) async {
     try {
       // Firebase registration
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -36,38 +34,17 @@ class AuthService {
   }
 
   // Login activity
-  static Future<String?> login(BuildContext context, AuthParameters param) async {
+  static Future<String?> login(AuthParameters param) async {
     try {
       // Firebase authentication
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: param.email,
           password: param.password
       );
-      MyUser? usr;
-      try {
-        usr = userList.firstWhere(
-              (e) =>
-          e.uid == userCredential.user?.uid
-        );
-      } on StateError catch(e) {
-        // User might have been created outside
-        // the application, hence it is not accessible.
-        logout();
-        return '${e.message}: User is private';
-      }
-      if (context.mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UserPage(user: usr!)
-          )
-        );
-        return null;
-      }
+      return null;
     } on FirebaseAuthException catch (e) {
       return handleException(e);
     }
-    return 'Unknown problem occurred.';
   }
 
   // Logout activity
