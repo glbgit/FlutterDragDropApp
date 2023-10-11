@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_drag_drop/user.dart';
 import 'package:flutter_drag_drop/user_page.dart';
 
@@ -5,6 +6,7 @@ class CloudService {
 
   // Add user
   static void add(MyUser usr) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(usr.uid).set({
       'uid': usr.uid,
       'username': usr.displayName,
@@ -22,13 +24,15 @@ class CloudService {
       map[k.toString()] = usr.shapeMap[k]?.id;
     }
 
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     users.doc(usr.uid).update({
       'shapes': map,
     });
   }
   
   // Retrieve all registered users
-  static void getAllRegistered() {
+  static Future<String?> getAllRegistered() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     // Make query
     users.get().then(
           (querySnapshot) {
@@ -53,9 +57,9 @@ class CloudService {
         }
       },
       onError: (e) {
-        // TODO: Make a widget
-        print("$e");
+        return '$e';
       }
     );
+    return null;
   }
 }

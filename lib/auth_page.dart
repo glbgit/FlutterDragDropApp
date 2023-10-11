@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_drop/auth_parameters.dart';
+import 'package:flutter_drag_drop/cloud_service.dart';
 import 'auth_service.dart';
 import 'user.dart';
 
@@ -26,6 +27,7 @@ class _AuthPageState extends State<AuthPage> {
   final _password = TextEditingController();
   final _passwordConfirm = TextEditingController();
   final _displayName = TextEditingController();
+  bool _usersUpToDate = false;
 
   // Clear text fields
   void _clearFields() {
@@ -33,6 +35,44 @@ class _AuthPageState extends State<AuthPage> {
     _password.clear();
     _passwordConfirm.clear();
     _displayName.clear();
+  }
+
+  // Show extra info about users
+  Widget _countUsers() {
+    if (!_usersUpToDate) {
+      CloudService.getAllRegistered().then(
+        (errMsg) {
+          Future.delayed(
+            const Duration(seconds: 1), () {
+              setState(() {
+                _usersUpToDate = true;
+              });
+            });
+          return errMsg;
+        }
+      );
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Registered users: '),
+        _usersUpToDate ? Text('${userList.length}') :
+        const Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 10.0,
+                width: 10.0,
+                child: Center(
+                  child: CircularProgressIndicator(strokeWidth: 2)
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   // Switch authentication page
@@ -154,7 +194,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ],
                 ),
-                Text('Registered users: ${userList.length}'),
+                _countUsers(),
               ],
             ),
           ),
@@ -231,7 +271,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ],
                 ),
-                Text('Registered users: ${userList.length}'),
+                _countUsers(),
               ],
             ),
           ),

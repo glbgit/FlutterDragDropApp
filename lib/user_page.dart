@@ -54,6 +54,9 @@ class _UserPage extends State<UserPage> {
 
   // Generate new random shape
   void _addShape() {
+    if (widget.user.shapeMap.length == maxGrid) {
+      return;
+    }
     int coord = _getNextAvailable();
     int id = randRange(0, numShapes);
     var item = ShapeItem(id: id.toString(), position: coord);

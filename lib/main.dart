@@ -1,17 +1,19 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_drag_drop/cloud_service.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'auth_page.dart';
 
-void main() {
-  initApp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const FlutterDragDrop());
 }
 
 class FlutterDragDrop extends StatelessWidget {
   const FlutterDragDrop({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,15 +22,7 @@ class FlutterDragDrop extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AuthPage(title: 'Welcome'),
+      home: const AuthPage(title: 'Home'),
     );
   }
-}
-
-void initApp() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  CloudService.getAllRegistered();
 }
