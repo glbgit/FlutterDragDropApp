@@ -28,7 +28,8 @@ class _AuthPageState extends State<AuthPage> {
   final _password = TextEditingController();
   final _passwordConfirm = TextEditingController();
   final _displayName = TextEditingController();
-  bool _usersUpToDate = false;
+  final connectionTimeOut = 10;
+  int connectionAttempts = 0;
 
   // Clear text fields
   void _clearFields() {
@@ -38,15 +39,37 @@ class _AuthPageState extends State<AuthPage> {
     _displayName.clear();
   }
 
+  // Display an indicator, a number or a message
+  Widget _usrCount = const Center(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(
+          height: 10.0,
+          width: 10.0,
+          child: Center(
+              child: CircularProgressIndicator(strokeWidth: 2)
+          ),
+        ),
+      ],
+    ),
+  );
+
   // Show extra info about users
-  Widget _countUsers() {
-    if (!_usersUpToDate) {
+  Widget _usrCounter() {
+    if (connectionAttempts > connectionTimeOut) {
+      return const Text('Could not connect to the server.');
+    }
+    if (!CloudService.usersRead) {
       CloudService.getAllRegistered().then(
         (errMsg) {
           Future.delayed(
             const Duration(seconds: 1), () {
               setState(() {
-                _usersUpToDate = CloudService.usersRead;
+                if (CloudService.usersRead) {
+                  _usrCount = Text('${userList.length}');
+                }
+                connectionAttempts++;
               });
             });
           return errMsg;
@@ -57,21 +80,7 @@ class _AuthPageState extends State<AuthPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text('Registered users: '),
-        _usersUpToDate ? Text('${userList.length}') :
-        const Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 10.0,
-                width: 10.0,
-                child: Center(
-                  child: CircularProgressIndicator(strokeWidth: 2)
-                ),
-              ),
-            ],
-          ),
-        ),
+        _usrCount,
       ],
     );
   }
@@ -212,7 +221,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ],
                 ),
-                _countUsers(),
+                _usrCounter(),
               ],
             ),
           ),
@@ -289,7 +298,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ],
                 ),
-                _countUsers(),
+                _usrCounter(),
               ],
             ),
           ),
