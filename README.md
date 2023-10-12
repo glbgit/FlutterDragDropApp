@@ -10,7 +10,7 @@ Drag and drop the shapes in different positions of the grid.
 Your progress is saved in the cloud in real time.
 
 ### Sign up
-Choose a nickname, email and password to register. You will be informed if the email is not available
+Choose a nickname, email and password to register. You will be informed if the email is not available.
 
 ### Log in
 The login is through authentication with email and password. Passwords must be at least 6 characters.
