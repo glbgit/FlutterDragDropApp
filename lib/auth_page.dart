@@ -46,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
           Future.delayed(
             const Duration(seconds: 1), () {
               setState(() {
-                _usersUpToDate = true;
+                _usersUpToDate = CloudService.usersRead;
               });
             });
           return errMsg;

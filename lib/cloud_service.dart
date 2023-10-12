@@ -4,6 +4,8 @@ import 'package:flutter_drag_drop/user_page.dart';
 
 class CloudService {
 
+  static bool usersRead = false;
+
   // Add user
   static void add(MyUser usr) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -55,6 +57,7 @@ class CloudService {
           // Populate user list
           userList.add(usr);
         }
+        usersRead = true;
       },
       onError: (e) {
         return '$e';
