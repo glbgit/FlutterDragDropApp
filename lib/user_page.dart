@@ -85,7 +85,7 @@ class _UserPage extends State<UserPage> {
     required int position,
     required ShapeItem item,
   }) {
-    var imgProvider = AssetImage('shapes/img${item.id}.png');
+    var imgProvider = AssetImage('assets/shapes/img${item.id}.png');
     return LongPressDraggable<ShapeItem>(
       data: item,
       dragAnchorStrategy: pointerDragAnchorStrategy,
@@ -215,7 +215,7 @@ class GridItem extends StatelessWidget {
       height: 1.2 * shapeHeight,
       child: Center(
         child: Image(
-          image: photoProvider ?? const AssetImage('shapes/empty.png'),
+          image: photoProvider ?? const AssetImage('assets/shapes/empty.png'),
           fit: BoxFit.cover,
         ),
       ),
