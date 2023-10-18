@@ -113,8 +113,7 @@ class _AuthPageState extends State<AuthPage> {
         setState(() {
           _type = AuthType.login;
           _clearFields();
-          }
-        );
+        });
       }
       _showFeedback(issue);
     } else {
