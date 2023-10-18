@@ -155,12 +155,14 @@ class _UserPage extends State<UserPage> {
       home: Scaffold(
         backgroundColor: const Color(0xffe3d4ff),
         appBar: AppBar(
+          foregroundColor: Colors.white,
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(title),
           actions: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
               child: IconButton(
+                color: Colors.white,
                 icon: const Icon(Icons.logout,size: 32.0),
                 onPressed: _logout,
                 tooltip: 'Log out',
@@ -174,6 +176,7 @@ class _UserPage extends State<UserPage> {
           children: _displayGrid(),
         ),
         floatingActionButton: FloatingActionButton(
+          foregroundColor: Colors.white,
           onPressed: _addShape,
           // foregroundColor: ,
           backgroundColor: Theme.of(context).primaryColor,
