@@ -211,8 +211,8 @@ class GridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 1.2 * shapeWidth,
-      height: 1.2 * shapeHeight,
+      width: 1.0 * shapeWidth,
+      height: 1.0 * shapeHeight,
       child: Center(
         child: Image(
           image: photoProvider ?? const AssetImage('assets/shapes/empty.png'),
@@ -243,8 +243,8 @@ class DraggingGridItem extends StatelessWidget {
         key: dragKey,
         borderRadius: BorderRadius.circular(12),
         child: SizedBox(
-          height: 1.2 * shapeHeight,
           width: 1.2 * shapeWidth,
+          height: 1.2 * shapeHeight,
           child: Opacity(
             opacity: 0.85,
             child: Image(
