@@ -19,3 +19,7 @@ The login is through authentication with email and password. Passwords must be a
 Upon registration, every user is added to a Firestore collection called `users`, that saves a document
 for each of them. The user document contains profile information. It also tracks every movement in 
 the user grid, by updating a personal field `shapes` that maps the objects onto the grid.
+
+## Test 
+
+To test the app reach me at giulio.lobello@outlook.com.
